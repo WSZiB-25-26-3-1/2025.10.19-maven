@@ -1,6 +1,6 @@
 package pl.edu.wszib.powtorka.gui;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.edu.wszib.powtorka.model.Car;
 import pl.edu.wszib.powtorka.model.User;
@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 @Component
-public class GUI {
-    @Autowired
-    Scanner scanner;
+@RequiredArgsConstructor
+public class GUI implements IGUI {
+    private final Scanner scanner;
 
+    @Override
     public String showMenuAndReadChoose() {
         System.out.println("1. List cars");
         System.out.println("2. Rent car");
@@ -21,18 +22,21 @@ public class GUI {
         return this.scanner.nextLine();
     }
 
+    @Override
     public String readPlate() {
         System.out.println("Plate:");
 
         return this.scanner.nextLine();
     }
 
+    @Override
     public void listCars(List<Car> cars) {
         for (Car car : cars) {
             System.out.println(car);
         }
     }
 
+    @Override
     public void showRentSuccessMessage(boolean success) {
         System.out.println(
                 success ?
@@ -40,10 +44,12 @@ public class GUI {
                         "Cannot rent the car.");
     }
 
+    @Override
     public void showWrongOptionMessage() {
         System.out.println("Wrong option. Please try again.");
     }
 
+    @Override
     public User readLoginAndPassword() {
         System.out.println("Login: ");
         String login = this.scanner.nextLine();

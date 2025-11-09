@@ -1,23 +1,22 @@
 package pl.edu.wszib.powtorka.core;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.edu.wszib.powtorka.authentication.Authenticator;
-import pl.edu.wszib.powtorka.database.CarRepository;
+import pl.edu.wszib.powtorka.authentication.IAuthenticator;
 import pl.edu.wszib.powtorka.database.ICarRepository;
 import pl.edu.wszib.powtorka.exceptions.CanNotRentCarException;
-import pl.edu.wszib.powtorka.gui.GUI;
+import pl.edu.wszib.powtorka.gui.IGUI;
 import pl.edu.wszib.powtorka.model.User;
 
 @Component
-public class Core {
-    @Autowired
-    ICarRepository carRepository;
-    @Autowired
-    GUI gui;
-    @Autowired
-    Authenticator authenticator;
+@RequiredArgsConstructor
+public class Core implements ICore{
+    private final ICarRepository carRepository;
+    private final IGUI gui;
+    private final IAuthenticator authenticator;
 
+    @Override
     public void run() {
         User user = gui.readLoginAndPassword();
         boolean isAuthenticated = authenticator.authenticate(
