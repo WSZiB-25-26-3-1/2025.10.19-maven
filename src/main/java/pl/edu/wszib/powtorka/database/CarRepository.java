@@ -1,16 +1,19 @@
 package pl.edu.wszib.powtorka.database;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import pl.edu.wszib.powtorka.exceptions.CanNotRentCarException;
 import pl.edu.wszib.powtorka.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Primary
 public class CarRepository implements ICarRepository {
     private final List<Car> cars = new ArrayList<>();
-    private static final CarRepository instance = new CarRepository();
 
-    private CarRepository() {
+    public CarRepository() {
         this.cars.add(new Car("Toyota", "Corolla", "KR11"));
         this.cars.add(new Car("Kia", "Ceed", "KR22"));
         this.cars.add(new Car("Fiat", "Panda", "KR33"));
@@ -33,9 +36,5 @@ public class CarRepository implements ICarRepository {
     @Override
     public List<Car> getCars() {
         return cars;
-    }
-
-    public static CarRepository getInstance() {
-        return instance;
     }
 }
